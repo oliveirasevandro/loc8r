@@ -24,7 +24,7 @@ var reviewSchema = new mongoose.Schema({
   reviewText: String,
   createdOn: {
     type: Date,
-    "default": Date.now
+    'default': Date.now
   }
 });
 
@@ -36,7 +36,7 @@ var locationSchema = new mongoose.Schema({
   address: String,
   rating: {
     type: Number,
-    "default": 0,
+    'default': 0,
     min: 0,
     max: 5
   },

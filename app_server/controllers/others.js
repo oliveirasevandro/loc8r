@@ -1,7 +1,8 @@
+/*eslint max-len: 0*/
 /* Get About Page */
-module.exports.about = function(req, res) {
+module.exports.about = function (req, res) {
   res.render('generic-text', {
     title: 'About Loc8r',
     content: 'Loc8r was created to help people find places to sit down and get a bit of work done.\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam mollis cursus posuere. Fusce ut ante non risus ultrices iaculis. Praesent venenatis eget lorem vel ullamcorper. Vestibulum ac nunc libero. Integer a massa mauris. In hac habitasse platea dictumst. In id neque eu lacus vehicula bibendum at et purus. Nunc non leo gravida, ultrices orci quis, interdum eros. Quisque ut libero ac ex gravida sollicitudin in non tortor. Vivamus eget tincidunt ante. Maecenas quis auctor sapien.\n\nMauris vel volutpat tellus. Proin tempus, justo at consequat vestibulum, justo ligula rutrum mi, viverra vulputate libero neque eu sem. Integer convallis ut turpis at tincidunt. Nulla bibendum ipsum ex, lacinia sollicitudin eros congue quis. Aenean sollicitudin et nunc id consectetur. Nam efficitur lacus ac dignissim rutrum. Duis porttitor eu quam ac commodo. Curabitur a congue elit. Etiam malesuada placerat arcu at accumsan. Integer aliquet odio sapien. Sed ornare arcu eu mauris finibus elementum.\n\nIn tortor lacus, dictum ac arcu quis, tincidunt mollis metus. Phasellus enim purus, tincidunt ac tempus et, vulputate non tortor. Morbi at sodales nisi. Mauris faucibus mattis tempus. Nunc id imperdiet felis, et fermentum tellus. Donec mollis volutpat sapien a tempus. Duis egestas eros eget nisi maximus pretium. Morbi felis risus, iaculis in posuere a, dapibus pretium odio. Nunc aliquam facilisis risus, at rhoncus ante viverra in. Morbi tristique pretium justo vitae congue.'
   });
-}
+};
