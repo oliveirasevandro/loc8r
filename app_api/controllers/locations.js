@@ -1,23 +1,6 @@
 var mongoose = require('mongoose');
 var Loc = mongoose.model('Location');
 
-var theEarth = (function () {
-  var earthRadius = 6371; //km, miles is 3959
-
-  function getDistanceFromRads(rads) {
-    return parseFloat(rads * earthRadius);
-  }
-
-  function getRadsFromDistance(distance) {
-    return parseFloat(distance / earthRadius);
-  }
-
-  return {
-    getDistanceFromRads: getDistanceFromRads,
-    getRadsFromDistance: getRadsFromDistance
-  };
-})();
-
 module.exports.locationsListByDistance = function (req, res) {
   var lng = parseFloat(req.query.lng);
   var lat = parseFloat(req.query.lat);
@@ -31,20 +14,50 @@ module.exports.locationsListByDistance = function (req, res) {
   };
   var geoOptions = {
     spherical: true,
-    maxDistance: theEarth.getRadsFromDistance(distance),
+    maxDistance: distance,
     num: 10
   };
 
+  if (!lng || !lat) {
+    sendJsonResponse(res, 404, {
+      message: 'lng and lat query parameters are required'
+    });
+    return;
+  }
+
   Loc.geoNear(point, geoOptions, function (err, results) {
     if (err) {
-      console.log('error:', err);
+      sendJsonResponse(res, 404, err);
+    } else {
+      sendJsonResponse(res, 200, buildLocations(results));
     }
-    sendJsonResponse(res, 200, buildLocations(results));
   });
 };
 
 module.exports.locationsCreate = function (req, res) {
-  sendJsonResponse(res, 200, {status: 'success'});
+  Loc.create({
+    name: req.body.name,
+    address: req.body.address,
+    facilities: req.body.facilities.split(','),
+    coords: [parseFloat(req.body.lng), parseFloat(req.body.lat)],
+    openingTimes: [{
+      days: req.body.days1,
+      opening: req.body.opening1,
+      closing: req.body.closing1,
+      closed: req.body.closed1
+    }, {
+      days: req.body.days2,
+      opening: req.body.opening2,
+      closing: req.body.closing2,
+      closed: req.body.closed2
+    }]
+  }, function (err, location) {
+    if (err) {
+      sendJsonResponse(res, 400, err);
+    } else {
+      sendJsonResponse(res, 201, location);
+    }
+  });
 };
 
 module.exports.locationsReadOne = function (req, res) {
@@ -85,7 +98,7 @@ function buildLocations(results) {
 
   results.forEach(function (doc) {
     locations.push({
-      distance: theEarth.getDistanceFromRads(doc.dis),
+      distance: doc.dis,
       name: doc.obj.name,
       address: doc.obj.address,
       rating: doc.obj.rating,

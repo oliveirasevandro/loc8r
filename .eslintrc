@@ -3,7 +3,8 @@
   "plugins": [], // npm i -D eslint-plugin-angular
   "env": {
     "browser": true,
-    "jasmine": true
+    "jasmine": true,
+    "es6": true
   },
   "globals": {
     "require": true,
